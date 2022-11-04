@@ -29,7 +29,7 @@ public class EmployeeController {
         return ResponseEntity.ok(iEmployeeRepository.findAll());
     }
 
-    @PutMapping("/{id}") @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}")
     public ResponseEntity<Response<EmployeeModel>> atualizarUser(@PathVariable("id") Long id, @RequestBody EmployeeModel user){
         Response<EmployeeModel> response = new Response<>();
         response.setData(this.employeeService.atualizarUsuario(user));
@@ -37,7 +37,7 @@ public class EmployeeController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}") @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/{id}")
     public ResponseEntity<Optional<EmployeeModel>> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(iEmployeeRepository.findById(id));
     }
@@ -45,7 +45,16 @@ public class EmployeeController {
     @PostMapping("/auth/singup")
     public ResponseEntity<Response<EmployeeModel>> salvar(@RequestBody EmployeeModel employeeModel) {
         Response<EmployeeModel> response = new Response<>();
-        response.setData(this.employeeService.saveUser(employeeModel));
+        response.setData(this.employeeService.saveUserWithRoleDefault(employeeModel));
+        response.setStatusCode(HttpStatus.CREATED.value());
+        response.setTimeStamp(new Date().getTime());
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/auth/singup/admin")
+    public ResponseEntity<Response<EmployeeModel>> savalrAdmin(@RequestBody EmployeeModel employeeModel) {
+        Response<EmployeeModel> response = new Response<>();
+        response.setData(this.employeeService.saveUserWithRoleAdmin(employeeModel));
         response.setStatusCode(HttpStatus.CREATED.value());
         response.setTimeStamp(new Date().getTime());
         return ResponseEntity.ok(response);

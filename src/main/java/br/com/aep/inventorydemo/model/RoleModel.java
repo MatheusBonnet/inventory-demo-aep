@@ -5,10 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import java.util.List;
 
@@ -21,12 +18,26 @@ public class RoleModel implements GrantedAuthority {
     private static final long serialVersionUID = 1L;
 
 	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String nomeRole;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "roles")
-    private List<EmployeeModel> employeeModels;
+    public RoleModel() {
+    }
 
+    public RoleModel(Long id, String nomeRole) {
+        this.id = id;
+        this.nomeRole = nomeRole;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNomeRole() {
         return nomeRole;
@@ -34,14 +45,6 @@ public class RoleModel implements GrantedAuthority {
 
     public void setNomeRole(String nomeRole) {
         this.nomeRole = nomeRole;
-    }
-
-    public List<EmployeeModel> getUsers() {
-        return employeeModels;
-    }
-
-    public void setUsers(List<EmployeeModel> users) {
-        this.employeeModels = users;
     }
 
     @Override

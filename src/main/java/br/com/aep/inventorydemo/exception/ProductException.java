@@ -6,14 +6,10 @@ public class ProductException extends RuntimeException{
 
 	private static final long serialVersionUID = -7743596026025818874L;
 	
-	private final HttpStatus httpStatus;
+	private String mensagem;
 
-	public ProductException(final String message, final HttpStatus httpStatus) {
+	public ProductException(final String message, final String mensagem) {
 		super(message);
-		this.httpStatus = httpStatus;
-	}
-
-	public HttpStatus getHttpStatus() {
-		return httpStatus;
+		this.mensagem = mensagem;
 	}
 }

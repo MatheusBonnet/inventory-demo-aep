@@ -5,6 +5,8 @@ import br.com.aep.inventorydemo.exception.ProductException;
 import br.com.aep.inventorydemo.model.CategoryModel;
 import br.com.aep.inventorydemo.model.ProductModel;
 
+import java.util.List;
+
 public interface ICategoryService {
 
 	
@@ -15,5 +17,9 @@ public interface ICategoryService {
 	public CategoryModel atualizarCategory(CategoryModel categoryModel) throws CategoryException;
 	
 	public CategoryModel saveCategory(CategoryModel categoryModel) throws CategoryException;
+
+	public CategoryModel buscaPorNome(String nome);
+
+	public List<String> allByname();
 
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -27,22 +28,18 @@ public class CategoryServiceImpl implements ICategoryService{
             }
 
         }catch (CategoryException e){
-            throw  new CategoryException(InventoryDemoConstants.MESSAGE_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw  new CategoryException(InventoryDemoConstants.MESSAGE_ERROR, e.getMessages());
         }
     }
 
     @Override
-    public CategoryModel buscaPorId(Long id) throws ProductException {
+    public CategoryModel buscaPorId(Long id){
         try {
             Optional<CategoryModel> categoryModel = categoryRepository.findById(id);
-            if(Objects.nonNull(categoryModel)){
-                return categoryModel.get();
-            }
-
-            throw  new CategoryException(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND, HttpStatus.NOT_FOUND);
+            return Objects.nonNull(categoryModel) ? categoryModel.get() : null;
 
         }catch (CategoryException e){
-            throw  new CategoryException(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND, HttpStatus.NOT_FOUND);
+            throw  new CategoryException(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND, e.getMessages());
         }
     }
 
@@ -55,10 +52,10 @@ public class CategoryServiceImpl implements ICategoryService{
                categoryRepository.save(category.get());
             }
 
-            throw  new CategoryException(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND, HttpStatus.NOT_FOUND);
+            return category.get();
 
         }catch (CategoryException e){
-            throw  new CategoryException(InventoryDemoConstants.MESSAGE_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw  new CategoryException(InventoryDemoConstants.MESSAGE_ERROR,  e.getMessages());
         }
     }
 
@@ -71,7 +68,31 @@ public class CategoryServiceImpl implements ICategoryService{
             return categoryModel;
 
         }catch (CategoryException e){
-            throw  new CategoryException(InventoryDemoConstants.MESSAGE_ERROR_REGISTER, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw  new CategoryException(InventoryDemoConstants.MESSAGE_ERROR_REGISTER, e.getMessages());
         }
     }
+
+    @Override
+    public CategoryModel buscaPorNome(String nome){
+        try {
+           CategoryModel categoryModel = categoryRepository.findByName(nome);
+           return Objects.nonNull(categoryModel) ? categoryModel : null;
+
+        }catch (CategoryException e){
+            throw  new CategoryException(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND, e.getMessages());
+        }
+    }
+
+    @Override
+    public List<String> allByname(){
+        try {
+            List<String> categoryNames = categoryRepository.allByName();
+            return Objects.nonNull(categoryNames) ? categoryNames : null;
+
+        }catch (CategoryException e){
+            throw  new CategoryException(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND, e.getMessages());
+        }
+    }
+
+
 }

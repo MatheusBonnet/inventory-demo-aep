@@ -47,7 +47,7 @@ public class EmployeeModel implements UserDetails {
 	
 	@JsonInclude(Include.NON_EMPTY)
 	private String senha;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "employee_roles",
@@ -60,7 +60,7 @@ public class EmployeeModel implements UserDetails {
 	public EmployeeModel() {
 	}
 	
-	public EmployeeModel(Long id, String nome, String sobrenome, String cpf, String email, String senha) {
+	public EmployeeModel(Long id, String nome, String sobrenome, String cpf, String email, String senha, List<RoleModel> roles) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -68,6 +68,7 @@ public class EmployeeModel implements UserDetails {
 		this.cpf = cpf;
 		this.email = email;
 		this.senha = senha;
+		this.roles = roles;
 	}
 
 	public Long getId() {
@@ -129,7 +130,7 @@ public class EmployeeModel implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return (Collection<? extends GrantedAuthority>) this.roles;
+		return  this.roles;
 	}
 
 	@Override
@@ -166,6 +167,10 @@ public class EmployeeModel implements UserDetails {
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	public void addRole(RoleModel role){
+		this.roles.add(role);
 	}
 
 	@Override

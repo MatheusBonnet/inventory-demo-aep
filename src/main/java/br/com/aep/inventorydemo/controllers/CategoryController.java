@@ -59,6 +59,15 @@ public class CategoryController {
         response.setStatusCode(HttpStatus.OK.value());
         response.setTimeStamp(new Date().getTime());
         return ResponseEntity.ok(response);
-}
+	}
+
+	@GetMapping("/allCategoryNames")
+	public ResponseEntity<Response<List<String>>> allCategoryNames(){
+		Response<List<String>> response = new Response<>();
+		response.setData(this.categoryService.allByname());
+		response.setStatusCode(HttpStatus.OK.value());
+		response.setTimeStamp(new Date().getTime());
+		return ResponseEntity.ok(response);
+	}
 	
 }

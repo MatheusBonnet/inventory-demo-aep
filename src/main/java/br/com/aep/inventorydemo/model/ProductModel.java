@@ -1,6 +1,7 @@
 package br.com.aep.inventorydemo.model;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,9 +28,9 @@ public class ProductModel {
 
 	private Boolean ativo;
 	
-	private LocalDate dataInsercao;
+	private Date dataInsercao;
 	
-	private LocalDate dataInativacao;
+	private Date dataInativacao;
 	
 	@OneToOne
 	private CategoryModel categoryModel;
@@ -41,8 +42,8 @@ public class ProductModel {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ProductModel(Long id, String nome, int quantidade, String descricao, Boolean ativo, LocalDate dataInsercao,
-			LocalDate dataInativacao, CategoryModel categoryModel, ProviderModel providerModel) {
+	public ProductModel(Long id, String nome, int quantidade, String descricao, Boolean ativo, Date dataInsercao,
+						Date dataInativacao, CategoryModel categoryModel, ProviderModel providerModel) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -95,19 +96,19 @@ public class ProductModel {
 		this.ativo = ativo;
 	}
 
-	public LocalDate getDataInsercao() {
+	public Date getDataInsercao() {
 		return dataInsercao;
 	}
 
-	public void setDataInsercao(LocalDate dataInsercao) {
+	public void setDataInsercao(Date dataInsercao) {
 		this.dataInsercao = dataInsercao;
 	}
 
-	public LocalDate getDataInativacao() {
+	public Date getDataInativacao() {
 		return dataInativacao;
 	}
 
-	public void setDataInativacao(LocalDate dataInativacao) {
+	public void setDataInativacao(Date dataInativacao) {
 		this.dataInativacao = dataInativacao;
 	}
 

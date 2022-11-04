@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -60,13 +61,18 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
 
-        String cpf = authResult.getName();
+        try {
 
-        String token = com.auth0.jwt.JWT.create().
-                withSubject(cpf)
-                .withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_EXPIRACAO))
-                .sign(com.auth0.jwt.algorithms.Algorithm.HMAC512(TOKEN_SENHA));
+            String cpf = authResult.getName();
 
-        response.getWriter().write(token);
+            String token = com.auth0.jwt.JWT.create().
+                    withSubject(cpf)
+                    .withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_EXPIRACAO))
+                    .sign(com.auth0.jwt.algorithms.Algorithm.HMAC512(TOKEN_SENHA));
+
+            response.getWriter().write(token);
+        }catch (Exception e){
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        }
     }
 }

@@ -6,14 +6,14 @@ public class ProviderException extends RuntimeException{
 
 	private static final long serialVersionUID = -7743596026025818874L;
 	
-	private final HttpStatus httpStatus;
+	private String errorMessage;
 
-	public ProviderException(final String message, final HttpStatus httpStatus) {
+	public ProviderException(final String message, final String errorMessage) {
 		super(message);
-		this.httpStatus = httpStatus;
+		this.errorMessage = errorMessage;
 	}
 
-	public HttpStatus getHttpStatus() {
-		return httpStatus;
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 }

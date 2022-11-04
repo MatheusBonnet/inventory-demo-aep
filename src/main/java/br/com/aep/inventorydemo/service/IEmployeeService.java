@@ -6,14 +6,16 @@ import br.com.aep.inventorydemo.model.EmployeeModel;
 public interface IEmployeeService {
 
 	
-	public EmployeeModel deletar(final Long cpf );
+	public void deletar(final Long cpf );
 	
 	public EmployeeModel buscaPorId(final Long cpf);
 
 	public EmployeeModel atualizarUsuario(EmployeeModel user) throws EmployeeException;
 	
-	public EmployeeModel saveUser(EmployeeModel user) throws EmployeeException;
+	public EmployeeModel saveUserWithRoleDefault(EmployeeModel user) throws EmployeeException;
 
 	public EmployeeModel findAuth() throws Exception;
+
+	public EmployeeModel saveUserWithRoleAdmin(EmployeeModel user);
 
 }

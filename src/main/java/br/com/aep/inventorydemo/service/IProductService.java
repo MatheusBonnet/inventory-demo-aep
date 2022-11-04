@@ -1,7 +1,10 @@
 package br.com.aep.inventorydemo.service;
 
+import br.com.aep.inventorydemo.data.ProductData;
 import br.com.aep.inventorydemo.exception.ProductException;
 import br.com.aep.inventorydemo.model.ProductModel;
+
+import java.util.List;
 
 public interface IProductService {
 
@@ -10,8 +13,10 @@ public interface IProductService {
 	
 	public ProductModel buscaPorId(final Long id) throws ProductException;
 
-	public ProductModel atualizarProduto(ProductModel productModel) throws ProductException;
+	public ProductData atualizarProduto(ProductData productData) throws ProductException;
 	
-	public ProductModel saveProduct(ProductModel productModel) throws ProductException;
+	public ProductModel saveProduct(ProductData productData) throws ProductException;
+
+	public List<ProductModel> findStock();
 
 }

@@ -8,6 +8,11 @@ public class InventoryDemoConstants {
 
     public static final String MESSAGE_ERROR_REGISTER = "Erro ao salvar, tente novamente!";
 
+    public static final Long ROLE_DEFAULT = 1L;
+
+    public static final Long ROLE_ADMIN = 2L;
+
+
     public InventoryDemoConstants() {
     }
 
