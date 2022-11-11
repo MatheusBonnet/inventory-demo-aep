@@ -72,8 +72,29 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public ProductData atualizarProduto(ProductData productData) throws ProductException {
-        return null;
+    public ProductModel atualizarProduto(Long id, ProductData productData) throws ProductException {
+        try{
+
+            ProductModel productModel = this.buscaPorId(id);
+
+            if(Objects.nonNull(productData)) {
+                CategoryModel categoryModel = iCategoryService.buscaPorNome(productData.getCategoria());
+                ProviderModel providerModel = iProviderRepository.findByName(productData.getFornecedor());
+                if(productModel.getCategoryModel() != categoryModel){
+                    productModel.setCategoryModel(categoryModel);
+                }
+                if(productModel.getProviderModel() != providerModel){
+                    productModel.setProviderModel(providerModel);
+                }
+
+                productRepository.save(productFacade.atualizaProduto(productModel, productData));
+            }
+
+            return productModel;
+
+        }catch (ProductException e){
+            throw  new ProductException(InventoryDemoConstants.MESSAGE_ERROR_REGISTER, e.getMessage());
+        }
     }
 
     @Override

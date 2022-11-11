@@ -26,6 +26,11 @@ public class ProductFacade {
         return productModel;
     }
 
+    public ProductModel atualizaProduto(ProductModel productModel, ProductData productData){
+        productModelPopulator.populate(productModel , productData);
+        return productModel;
+    }
+
     public Populator<ProductModel, ProductData> getProductModelPopulator() {
         return productModelPopulator;
     }

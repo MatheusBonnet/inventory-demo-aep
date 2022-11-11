@@ -30,8 +30,6 @@ public class EmployeeServiceImpl implements IEmployeeService,UserDetailsService 
 	
 	public static final String MESSAGE_ERROR_REGISTER_USER = "Erro ao salvar, tente novamente!";
 
-	private static final Logger LOG = LoggerFactory.getLogger(EmployeeServiceImpl.class);
-
 	
 	@Autowired
 	private IEmployeeRepository employeeRepository;
@@ -61,7 +59,7 @@ public class EmployeeServiceImpl implements IEmployeeService,UserDetailsService 
 			this.employeeRepository.deleteById(employee.getId());
 						
 		}catch (EmployeeException m) {
-			LOG.error(String.format(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND + m.getMessage()));
+			throw new EmployeeException(InventoryDemoConstants.MESSAGE_ERROR, m.getMessage());
 		}
 	}
 
@@ -73,8 +71,7 @@ public class EmployeeServiceImpl implements IEmployeeService,UserDetailsService 
 			return employee.orElse(null);
 			
 		} catch (EmployeeException m) {
-			LOG.error(String.format(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND + m.getMessage()));
-			return null;
+			throw new EmployeeException(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND, m.getMessage());
 		}
 	}
 
@@ -95,8 +92,7 @@ public class EmployeeServiceImpl implements IEmployeeService,UserDetailsService 
 			return employee;
 			
 		} catch (EmployeeException m) {
-			LOG.error(String.format(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND + m.getMessage()));
-			return null;
+			throw new EmployeeException(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND, m.getMessage());
 		}
 	}
 
@@ -113,8 +109,7 @@ public class EmployeeServiceImpl implements IEmployeeService,UserDetailsService 
 			return user;
 
 		}catch (EmployeeException e){
-			LOG.error(String.format(MESSAGE_ERROR_REGISTER_USER + e.getMessage()));
-			return null;
+			throw new EmployeeException(InventoryDemoConstants.MESSAGE_ERROR_REGISTER, e.getMessage());
 		}
 	}
 
@@ -144,8 +139,7 @@ public class EmployeeServiceImpl implements IEmployeeService,UserDetailsService 
 			return user;
 
 		}catch (EmployeeException e){
-			LOG.error(String.format(MESSAGE_ERROR_REGISTER_USER + e.getMessage()));
-			return null;
+			throw new EmployeeException(InventoryDemoConstants.MESSAGE_ERROR_REGISTER, e.getMessage());
 		}
 	}
 

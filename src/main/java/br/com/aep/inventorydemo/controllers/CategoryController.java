@@ -3,16 +3,12 @@ package br.com.aep.inventorydemo.controllers;
 import java.util.Date;
 import java.util.List;
 
+import br.com.aep.inventorydemo.data.ProductData;
+import br.com.aep.inventorydemo.model.ProductModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.aep.inventorydemo.model.CategoryModel;
 import br.com.aep.inventorydemo.model.Response;
@@ -67,6 +63,14 @@ public class CategoryController {
 		response.setData(this.categoryService.allByname());
 		response.setStatusCode(HttpStatus.OK.value());
 		response.setTimeStamp(new Date().getTime());
+		return ResponseEntity.ok(response);
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<Response<CategoryModel>> atualizarCategory(@PathVariable("id") Long id, @RequestBody CategoryModel categoryModel){
+		Response<CategoryModel> response = new Response<>();
+		response.setData(this.categoryService.atualizarCategory(id, categoryModel));
+		response.setStatusCode(HttpStatus.OK.value());
 		return ResponseEntity.ok(response);
 	}
 	

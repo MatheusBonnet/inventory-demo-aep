@@ -1,6 +1,7 @@
 package br.com.aep.inventorydemo.service;
 
 import br.com.aep.inventorydemo.data.ProductData;
+import br.com.aep.inventorydemo.data.ProviderData;
 import br.com.aep.inventorydemo.exception.CategoryException;
 import br.com.aep.inventorydemo.exception.ProductException;
 import br.com.aep.inventorydemo.exception.ProviderException;
@@ -16,7 +17,7 @@ public interface IProviderService {
 
     public ProviderModel buscaPorId(final Long id) throws ProviderException;
 
-    public ProviderModel atualizarProvider(ProviderModel providerModel) throws ProviderException;
+    public ProviderModel atualizarProvider(final Long id, ProviderData providerData) throws ProviderException;
 
     public ProviderModel saveProvider(ProviderModel providerModel) throws ProviderException;
 

@@ -56,8 +56,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/api/v1/employees/auth/singup",
-                		"/login").permitAll()
+                .antMatchers("/api/v1/employees/auth/singup").permitAll()
+                .antMatchers("/login").permitAll()
                 .and().cors()
                 .and().csrf().disable()
                 .addFilter(new JWTAutenticarFilter(authenticationManager()))

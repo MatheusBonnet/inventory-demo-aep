@@ -13,7 +13,7 @@ public interface IProductService {
 	
 	public ProductModel buscaPorId(final Long id) throws ProductException;
 
-	public ProductData atualizarProduto(ProductData productData) throws ProductException;
+	public ProductModel atualizarProduto(Long id,ProductData productData) throws ProductException;
 	
 	public ProductModel saveProduct(ProductData productData) throws ProductException;
 

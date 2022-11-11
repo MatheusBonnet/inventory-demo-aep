@@ -1,6 +1,8 @@
 package br.com.aep.inventorydemo.controllers;
 
 import br.com.aep.inventorydemo.data.ProductData;
+import br.com.aep.inventorydemo.data.ProviderData;
+import br.com.aep.inventorydemo.model.CategoryModel;
 import br.com.aep.inventorydemo.model.ProductModel;
 import br.com.aep.inventorydemo.model.ProviderModel;
 import br.com.aep.inventorydemo.model.Response;
@@ -53,6 +55,14 @@ public class ProviderController {
         response.setData(this.iProviderService.allByname());
         response.setStatusCode(HttpStatus.OK.value());
         response.setTimeStamp(new Date().getTime());
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Response<ProviderModel>> atualizarProvider(@PathVariable("id") Long id, @RequestBody ProviderData providerData){
+        Response<ProviderModel> response = new Response<>();
+        response.setData(this.iProviderService.atualizarProvider(id, providerData));
+        response.setStatusCode(HttpStatus.OK.value());
         return ResponseEntity.ok(response);
     }
 

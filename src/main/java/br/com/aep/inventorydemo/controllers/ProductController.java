@@ -61,4 +61,12 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Response<ProductModel>> atualizarUser(@PathVariable("id") Long id, @RequestBody ProductData productData){
+        Response<ProductModel> response = new Response<>();
+        response.setData(this.productService.atualizarProduto(id, productData));
+        response.setStatusCode(HttpStatus.OK.value());
+        return ResponseEntity.ok(response);
+    }
+
 }

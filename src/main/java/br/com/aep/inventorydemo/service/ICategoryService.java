@@ -14,7 +14,7 @@ public interface ICategoryService {
 	
 	public CategoryModel buscaPorId(final Long id) throws ProductException;
 
-	public CategoryModel atualizarCategory(CategoryModel categoryModel) throws CategoryException;
+	public CategoryModel atualizarCategory(Long id, CategoryModel categoryModel) throws CategoryException;
 	
 	public CategoryModel saveCategory(CategoryModel categoryModel) throws CategoryException;
 
