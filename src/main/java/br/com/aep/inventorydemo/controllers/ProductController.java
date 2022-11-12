@@ -69,4 +69,20 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/findByCategory")
+    public ResponseEntity<Response<List<ProductModel>>> findByCategoryName(@RequestParam String category) {
+        Response<List<ProductModel>> response = new Response<>();
+        response.setData(this.productService.allProductsByCategory(category));
+        response.setStatusCode(HttpStatus.OK.value());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/findByProvider")
+    public ResponseEntity<Response<List<ProductModel>>> findByProviderName(@RequestParam String provider) {
+        Response<List<ProductModel>> response = new Response<>();
+        response.setData(this.productService.allProductByProvider(provider));
+        response.setStatusCode(HttpStatus.OK.value());
+        return ResponseEntity.ok(response);
+    }
+
 }

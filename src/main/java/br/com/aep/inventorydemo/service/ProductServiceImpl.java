@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,5 +129,35 @@ public class ProductServiceImpl implements IProductService{
 
         return withoutStock;
 
+    }
+
+    @Override
+    public List<ProductModel> allProductByProvider(String name) {
+        try {
+            List<ProductModel> productModelList = productRepository.allProductByProvider(name);
+            if(CollectionUtils.isEmpty(productModelList)){
+                throw  new Exception(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND);
+            }
+
+            return productModelList;
+
+        }catch (Exception e){
+            throw  new ProductException(InventoryDemoConstants.MESSAGE_ERROR, e.getMessage());
+        }
+    }
+
+    @Override
+    public List<ProductModel> allProductsByCategory(String name) {
+        try {
+            List<ProductModel> productModelList = productRepository.allProductsByCategory(name);
+            if(CollectionUtils.isEmpty(productModelList)){
+                throw new Exception(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND);
+            }
+
+            return productModelList;
+
+        }catch (Exception e){
+            throw  new ProductException(InventoryDemoConstants.MESSAGE_ERROR, e.getMessage());
+        }
     }
 }

@@ -44,9 +44,9 @@ public class CategoryServiceImpl implements ICategoryService{
     }
 
     @Override
-    public CategoryModel atualizarCategory(CategoryModel categoryModel) throws CategoryException {
+    public CategoryModel atualizarCategory(Long id, CategoryModel categoryModel) throws CategoryException {
         try {
-            Optional<CategoryModel> category = categoryRepository.findById(categoryModel.getId());
+            Optional<CategoryModel> category = categoryRepository.findById(id);
             if(Objects.nonNull(category)){
                category.get().setCategoryName(categoryModel.getCategoryName());
                categoryRepository.save(category.get());
