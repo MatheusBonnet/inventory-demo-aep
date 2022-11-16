@@ -3,6 +3,7 @@ package br.com.aep.inventorydemo.controllers;
 import java.util.Date;
 import java.util.List;
 
+import br.com.aep.inventorydemo.data.CategoryData;
 import br.com.aep.inventorydemo.data.ProductData;
 import br.com.aep.inventorydemo.model.ProductModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,10 +67,10 @@ public class CategoryController {
 		return ResponseEntity.ok(response);
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<Response<CategoryModel>> atualizarCategory(@PathVariable("id") Long id, @RequestBody CategoryModel categoryModel){
+	@PutMapping()
+	public ResponseEntity<Response<CategoryModel>> atualizarCategory(@RequestBody CategoryData categoryData){
 		Response<CategoryModel> response = new Response<>();
-		response.setData(this.categoryService.atualizarCategory(id, categoryModel));
+		response.setData(this.categoryService.atualizarCategory(categoryData));
 		response.setStatusCode(HttpStatus.OK.value());
 		return ResponseEntity.ok(response);
 	}

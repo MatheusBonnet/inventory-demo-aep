@@ -13,6 +13,7 @@ import br.com.aep.inventorydemo.repository.IProviderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -35,6 +36,9 @@ public class ProductServiceImpl implements IProductService{
 
     @Autowired
     private ProductFacade productFacade;
+
+    @Autowired
+    private Environment environment;
 
 
     private static final Logger LOG = LoggerFactory.getLogger(ProductServiceImpl.class);
@@ -73,10 +77,10 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public ProductModel atualizarProduto(Long id, ProductData productData) throws ProductException {
+    public ProductModel atualizarProduto(ProductData productData) throws ProductException {
         try{
 
-            ProductModel productModel = this.buscaPorId(id);
+            ProductModel productModel = this.buscaPorId(productData.getId());
 
             if(Objects.nonNull(productData)) {
                 CategoryModel categoryModel = iCategoryService.buscaPorNome(productData.getCategoria());
@@ -120,10 +124,11 @@ public class ProductServiceImpl implements IProductService{
 
     @Override
     public List<ProductModel> findStock() {
+        Integer stock = Integer.parseInt(environment.getProperty("productWithoutStock"));
         List<ProductModel> withoutStock = new ArrayList<>();
         List<ProductModel> productModelList = productRepository.findAll();
         for(ProductModel productModel : productModelList){
-            if (Objects.nonNull(productModel) && productModel.getQuantidade() <= 100)
+            if (Objects.nonNull(productModel) && productModel.getQuantidade() <= stock)
                 withoutStock.add(productModel);
         }
 

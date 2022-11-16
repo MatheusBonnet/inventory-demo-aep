@@ -52,9 +52,9 @@ public class ProviderServiceImpl implements IProviderService {
     }
 
     @Override
-    public ProviderModel atualizarProvider(final Long id, ProviderData providerData) throws ProviderException {
+    public ProviderModel atualizarProvider(ProviderData providerData) throws ProviderException {
         try {
-            ProviderModel providerModel = buscaPorId(id);
+            ProviderModel providerModel = buscaPorId(providerData.getId());
             providerFacade.atualizaProduto(providerModel, providerData);
             return iProviderRepository.save(providerModel);
         } catch (ProviderException e) {

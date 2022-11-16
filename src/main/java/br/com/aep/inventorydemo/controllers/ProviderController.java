@@ -58,10 +58,10 @@ public class ProviderController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Response<ProviderModel>> atualizarProvider(@PathVariable("id") Long id, @RequestBody ProviderData providerData){
+    @PutMapping()
+    public ResponseEntity<Response<ProviderModel>> atualizarProvider(@RequestBody ProviderData providerData){
         Response<ProviderModel> response = new Response<>();
-        response.setData(this.iProviderService.atualizarProvider(id, providerData));
+        response.setData(this.iProviderService.atualizarProvider(providerData));
         response.setStatusCode(HttpStatus.OK.value());
         return ResponseEntity.ok(response);
     }

@@ -1,5 +1,6 @@
 package br.com.aep.inventorydemo.service;
 
+import br.com.aep.inventorydemo.data.CategoryData;
 import br.com.aep.inventorydemo.exception.CategoryException;
 import br.com.aep.inventorydemo.exception.ProductException;
 import br.com.aep.inventorydemo.model.CategoryModel;
@@ -14,7 +15,7 @@ public interface ICategoryService {
 	
 	public CategoryModel buscaPorId(final Long id) throws ProductException;
 
-	public CategoryModel atualizarCategory(Long id, CategoryModel categoryModel) throws CategoryException;
+	public CategoryModel atualizarCategory(CategoryData categoryData) throws CategoryException;
 	
 	public CategoryModel saveCategory(CategoryModel categoryModel) throws CategoryException;
 

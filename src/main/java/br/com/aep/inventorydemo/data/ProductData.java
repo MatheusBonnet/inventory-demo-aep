@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class ProductData implements Serializable {
 
+    private Long id;
+
     private String nome;
 
     private Integer quantidade;
@@ -14,12 +16,24 @@ public class ProductData implements Serializable {
 
     private String fornecedor;
 
-    public ProductData(String nome, Integer quantidade, String descricao, String categoria, String fornecedor) {
+    public ProductData() {
+    }
+
+    public ProductData( Long id, String nome, Integer quantidade, String descricao, String categoria, String fornecedor) {
+        this.id = id;
         this.nome = nome;
         this.quantidade = quantidade;
         this.descricao = descricao;
         this.categoria = categoria;
         this.fornecedor = fornecedor;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {

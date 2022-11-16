@@ -17,7 +17,7 @@ public interface IProviderService {
 
     public ProviderModel buscaPorId(final Long id) throws ProviderException;
 
-    public ProviderModel atualizarProvider(final Long id, ProviderData providerData) throws ProviderException;
+    public ProviderModel atualizarProvider(ProviderData providerData) throws ProviderException;
 
     public ProviderModel saveProvider(ProviderModel providerModel) throws ProviderException;
 

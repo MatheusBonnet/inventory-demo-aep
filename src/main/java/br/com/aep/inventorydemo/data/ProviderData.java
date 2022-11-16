@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class ProviderData implements Serializable {
 
+    private Long id;
+
     private String nome;
 
     private String empresa;
@@ -19,13 +21,22 @@ public class ProviderData implements Serializable {
     public ProviderData() {
     }
 
-    public ProviderData(String nome, String empresa, String contato, String cnpj, String endereco, String email) {
+    public ProviderData(Long id, String nome, String empresa, String contato, String cnpj, String endereco, String email) {
+        this.id = id;
         this.nome = nome;
         this.empresa = empresa;
         this.contato = contato;
         this.cnpj = cnpj;
         this.endereco = endereco;
         this.email = email;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
