@@ -1,9 +1,12 @@
 package br.com.aep.inventorydemo.data;
 
+import br.com.aep.inventorydemo.model.CategoryModel;
+import br.com.aep.inventorydemo.model.ProviderModel;
+
 import java.io.Serializable;
 import java.util.Date;
 
-public class ProductData implements Serializable {
+public class ProductVO implements Serializable {
 
     private Long id;
 
@@ -23,10 +26,10 @@ public class ProductData implements Serializable {
 
     private Date dataInativacao;
 
-    public ProductData() {
+    public ProductVO() {
     }
 
-    public ProductData(Long id, String nome, Integer quantidade, String descricao, String categoria, String fornecedor, Boolean ativo, Date dataInsercao, Date dataInativacao) {
+    public ProductVO(Long id, String nome, Integer quantidade, String descricao, String categoria, String fornecedor, Boolean ativo, Date dataInsercao, Date dataInativacao) {
         this.id = id;
         this.nome = nome;
         this.quantidade = quantidade;

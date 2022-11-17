@@ -2,6 +2,7 @@ package br.com.aep.inventorydemo.service;
 
 import br.com.aep.inventorydemo.constants.InventoryDemoConstants;
 import br.com.aep.inventorydemo.data.ProductData;
+import br.com.aep.inventorydemo.data.ProductVO;
 import br.com.aep.inventorydemo.exception.CategoryException;
 import br.com.aep.inventorydemo.exception.ProductException;
 import br.com.aep.inventorydemo.facade.ProductFacade;
@@ -54,7 +55,7 @@ public class ProductServiceImpl implements IProductService{
     public void inativarProduto(Long id) {
 
         try {
-            ProductModel productModel = buscaPorId(id);
+            ProductModel productModel = productRepository.findById(id).get();
             if(Objects.nonNull(productModel) && productModel.getAtivo() == Boolean.TRUE){
                 productModel.setAtivo(Boolean.FALSE);
                 productRepository.save(productModel);
@@ -67,10 +68,25 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public ProductModel buscaPorId(Long id) throws ProductException {
+    public ProductVO buscaPorId(Long id) throws ProductException {
         try {
             Optional<ProductModel> productModel = productRepository.findById(id);
-            return productModel.get();
+            return productFacade.populaData(new ProductVO(), productModel.get());
+        }catch (ProductException e){
+            throw  new ProductException(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @Override
+    public  List<ProductVO> findAll() throws ProductException {
+        try {
+            List<ProductModel> productModelList = productRepository.findAll();
+            List<ProductVO> productVOS = new ArrayList<>();
+            for(ProductModel productModel : productModelList){
+                if(productModel.getAtivo() == Boolean.TRUE)
+                productVOS.add(productFacade.populaData(new ProductVO(), productModel));
+            }
+            return productVOS;
         }catch (ProductException e){
             throw  new ProductException(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND, e.getMessage());
         }
@@ -80,7 +96,7 @@ public class ProductServiceImpl implements IProductService{
     public ProductModel atualizarProduto(ProductData productData) throws ProductException {
         try{
 
-            ProductModel productModel = this.buscaPorId(productData.getId());
+            ProductModel productModel = productRepository.findById(productData.getId()).get();
 
             if(Objects.nonNull(productData)) {
                 CategoryModel categoryModel = iCategoryService.buscaPorNome(productData.getCategoria());

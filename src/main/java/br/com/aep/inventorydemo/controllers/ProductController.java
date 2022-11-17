@@ -1,9 +1,11 @@
 package br.com.aep.inventorydemo.controllers;
 
 import br.com.aep.inventorydemo.data.ProductData;
+import br.com.aep.inventorydemo.data.ProductVO;
 import br.com.aep.inventorydemo.model.EmployeeModel;
 import br.com.aep.inventorydemo.model.ProductModel;
 import br.com.aep.inventorydemo.model.Response;
+import br.com.aep.inventorydemo.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,9 @@ public class ProductController {
     @Autowired
     private IProductService productService;
 
+    @Autowired
+    private IProductRepository productRepository;
+
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Long id) {
@@ -44,9 +49,9 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Response<ProductModel>> findById(@PathVariable("id") Long id) {
-        Response<ProductModel> response = new Response<>();
-        response.setData(this.productService.buscaPorId(null));
+    public ResponseEntity<Response<ProductVO>> findById(@PathVariable("id") Long id) {
+        Response<ProductVO> response = new Response<>();
+        response.setData(this.productService.buscaPorId(id));
         response.setStatusCode(HttpStatus.FOUND.value());
         response.setTimeStamp(new Date().getTime());
         return ResponseEntity.ok(response);
@@ -56,6 +61,15 @@ public class ProductController {
     public ResponseEntity<Response<List<ProductModel>>> findStock() {
         Response<List<ProductModel>> response = new Response<>();
         response.setData(this.productService.findStock());
+        response.setStatusCode(HttpStatus.OK.value());
+        response.setTimeStamp(new Date().getTime());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping()
+    public ResponseEntity<Response<List<ProductVO>>> findAll() {
+        Response<List<ProductVO>> response = new Response<>();
+        response.setData(this.productService.findAll());
         response.setStatusCode(HttpStatus.OK.value());
         response.setTimeStamp(new Date().getTime());
         return ResponseEntity.ok(response);
