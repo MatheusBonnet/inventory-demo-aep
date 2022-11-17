@@ -15,9 +15,17 @@ public class ProviderFacade {
     @Autowired
     private Populator<ProviderModel, ProviderData> populatorProvider;
 
-    public ProviderModel atualizaProduto(ProviderModel model, ProviderData data){
+    @Autowired
+    private Populator<ProviderData, ProviderModel> providerReversePopulator;
+
+    public ProviderModel atualizaProvider(ProviderModel model, ProviderData data){
         populatorProvider.populate(model , data);
         return model;
+    }
+
+    public ProviderData populaProviderData(ProviderData providerData, ProviderModel providerModel){
+        providerReversePopulator.populate(providerData , providerModel);
+        return providerData;
     }
 
     public Populator<ProviderModel, ProviderData> getPopulatorProvider() {
@@ -26,5 +34,13 @@ public class ProviderFacade {
 
     public void setPopulatorProvider(Populator<ProviderModel, ProviderData> populatorProvider) {
         this.populatorProvider = populatorProvider;
+    }
+
+    public Populator<ProviderData, ProviderModel> getProviderReversePopulator() {
+        return providerReversePopulator;
+    }
+
+    public void setProviderReversePopulator(Populator<ProviderData, ProviderModel> providerReversePopulator) {
+        this.providerReversePopulator = providerReversePopulator;
     }
 }

@@ -15,13 +15,13 @@ public interface IProviderService {
 
     public void excluiProvider(final Long id);
 
-    public ProviderModel buscaPorId(final Long id) throws ProviderException;
+    public ProviderData buscaPorId(final Long id) throws ProviderException;
 
-    public ProviderModel atualizarProvider(ProviderData providerData) throws ProviderException;
+    public ProviderData atualizarProvider(ProviderData providerData) throws ProviderException;
 
     public ProviderModel saveProvider(ProviderModel providerModel) throws ProviderException;
 
-    public ProviderModel buscaPorNome(String nome);
+    public ProviderData buscaPorNome(String nome);
 
     public List<String> allByname();
 }

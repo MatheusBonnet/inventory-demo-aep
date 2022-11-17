@@ -23,7 +23,7 @@ public class CategoryServiceImpl implements ICategoryService{
     @Override
     public void excluiCategoria(Long id) {
         try {
-            CategoryModel categoryModel = buscaPorId(id);
+            CategoryModel categoryModel = categoryRepository.findById(id).get();
             if(Objects.nonNull(categoryModel)){
                 categoryRepository.delete(categoryModel);
             }
@@ -34,10 +34,16 @@ public class CategoryServiceImpl implements ICategoryService{
     }
 
     @Override
-    public CategoryModel buscaPorId(Long id){
+    public CategoryData buscaPorId(Long id){
         try {
-            Optional<CategoryModel> categoryModel = categoryRepository.findById(id);
-            return Objects.nonNull(categoryModel) ? categoryModel.get() : null;
+            CategoryModel categoryModel = categoryRepository.findById(id).get();
+
+            CategoryData categoryData = new CategoryData();
+
+            categoryData.setId(categoryModel.getId());
+            categoryData.setCategoryName(categoryModel.getCategoryName());
+
+            return Objects.nonNull(categoryData) ? categoryData : null;
 
         }catch (CategoryException e){
             throw  new CategoryException(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND, e.getMessages());
@@ -45,15 +51,17 @@ public class CategoryServiceImpl implements ICategoryService{
     }
 
     @Override
-    public CategoryModel atualizarCategory(CategoryData categoryData) throws CategoryException {
+    public CategoryData atualizarCategory(CategoryData categoryData) throws CategoryException {
         try {
-            Optional<CategoryModel> category = categoryRepository.findById(categoryData.getId());
+            CategoryModel category = categoryRepository.findById(categoryData.getId()).get();
             if(Objects.nonNull(category)){
-               category.get().setCategoryName(categoryData.getCategoryName());
-               categoryRepository.save(category.get());
+               category.setCategoryName(categoryData.getCategoryName());
+               categoryRepository.save(category);
             }
 
-            return category.get();
+            categoryData.setId(category.getId());
+
+            return categoryData;
 
         }catch (CategoryException e){
             throw  new CategoryException(InventoryDemoConstants.MESSAGE_ERROR,  e.getMessages());

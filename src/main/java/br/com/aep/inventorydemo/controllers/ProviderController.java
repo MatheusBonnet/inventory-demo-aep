@@ -41,8 +41,8 @@ public class ProviderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Response<ProviderModel>> findById(@PathVariable("id") Long id) {
-        Response<ProviderModel> response = new Response<>();
+    public ResponseEntity<Response<ProviderData>> findById(@PathVariable("id") Long id) {
+        Response<ProviderData> response = new Response<>();
         response.setData(this.iProviderService.buscaPorId(id));
         response.setStatusCode(HttpStatus.FOUND.value());
         response.setTimeStamp(new Date().getTime());
@@ -59,8 +59,8 @@ public class ProviderController {
     }
 
     @PutMapping()
-    public ResponseEntity<Response<ProviderModel>> atualizarProvider(@RequestBody ProviderData providerData){
-        Response<ProviderModel> response = new Response<>();
+    public ResponseEntity<Response<ProviderData>> atualizarProvider(@RequestBody ProviderData providerData){
+        Response<ProviderData> response = new Response<>();
         response.setData(this.iProviderService.atualizarProvider(providerData));
         response.setStatusCode(HttpStatus.OK.value());
         return ResponseEntity.ok(response);

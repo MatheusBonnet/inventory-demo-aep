@@ -1,26 +1,26 @@
 package br.com.aep.inventorydemo.populators;
 
-import br.com.aep.inventorydemo.data.ProductVO;
+import br.com.aep.inventorydemo.data.ProductData;
 import br.com.aep.inventorydemo.model.ProductModel;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
 @Service
-public class ProductReversePopulator implements Populator<ProductVO, ProductModel> {
+public class ProductReversePopulator implements Populator<ProductData, ProductModel> {
 
 
     @Override
-    public void populate(ProductVO productVO, ProductModel productModel) {
+    public void populate(ProductData productData, ProductModel productModel) {
 
-        productVO.setId(productModel.getId());
-        productVO.setAtivo(productModel.getAtivo());
-        productVO.setDataInsercao(productModel.getDataInsercao());
-        productVO.setDataInativacao(Objects.nonNull(productModel.getDataInativacao()) ? productModel.getDataInativacao() : null);
-        productVO.setDescricao(productModel.getDescricao());
-        productVO.setQuantidade(productModel.getQuantidade());
-        productVO.setNome(productModel.getNome());
-        productVO.setCategoria(productModel.getCategoryModel().getCategoryName());
-        productVO.setFornecedor(productModel.getProviderModel().getNome());
+        productData.setId(productModel.getId());
+        productData.setAtivo(productModel.getAtivo());
+        productData.setDataInsercao(productModel.getDataInsercao());
+        productData.setDataInativacao(Objects.nonNull(productModel.getDataInativacao()) ? productModel.getDataInativacao() : null);
+        productData.setDescricao(productModel.getDescricao());
+        productData.setQuantidade(productModel.getQuantidade());
+        productData.setNome(productModel.getNome());
+        productData.setCategoria(productModel.getCategoryModel().getCategoryName());
+        productData.setFornecedor(productModel.getProviderModel().getNome());
     }
 }

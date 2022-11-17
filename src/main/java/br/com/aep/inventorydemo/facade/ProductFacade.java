@@ -1,7 +1,6 @@
 package br.com.aep.inventorydemo.facade;
 
 import br.com.aep.inventorydemo.data.ProductData;
-import br.com.aep.inventorydemo.data.ProductVO;
 import br.com.aep.inventorydemo.model.CategoryModel;
 import br.com.aep.inventorydemo.model.ProductModel;
 import br.com.aep.inventorydemo.model.ProviderModel;
@@ -17,7 +16,7 @@ public class ProductFacade {
     private Populator<ProductModel, ProductData> productModelPopulator;
 
     @Autowired
-    private Populator<ProductVO, ProductModel> productReversePopulator;
+    private Populator<ProductData, ProductModel> productReversePopulator;
 
     public ProductFacade(Populator<ProductModel, ProductData> productModelPopulator, ProductReversePopulator productReversePopulator) {
         this.productModelPopulator = productModelPopulator;
@@ -37,9 +36,9 @@ public class ProductFacade {
         return productModel;
     }
 
-    public ProductVO populaData(ProductVO productVO, ProductModel productModel){
-        productReversePopulator.populate(productVO , productModel);
-        return productVO;
+    public ProductData populaData(ProductData productData, ProductModel productModel){
+        productReversePopulator.populate(productData , productModel);
+        return productData;
     }
 
     public Populator<ProductModel, ProductData> getProductModelPopulator() {
@@ -50,11 +49,11 @@ public class ProductFacade {
         this.productModelPopulator = productModelPopulator;
     }
 
-    public Populator<ProductVO, ProductModel> getProductReversePopulator() {
+    public Populator<ProductData, ProductModel> getProductReversePopulator() {
         return productReversePopulator;
     }
 
-    public void setProductReversePopulator(Populator<ProductVO, ProductModel> productReversePopulator) {
+    public void setProductReversePopulator(Populator<ProductData, ProductModel> productReversePopulator) {
         this.productReversePopulator = productReversePopulator;
     }
 }

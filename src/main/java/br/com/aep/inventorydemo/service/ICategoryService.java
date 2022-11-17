@@ -13,9 +13,9 @@ public interface ICategoryService {
 	
 	public void excluiCategoria(final Long id);
 	
-	public CategoryModel buscaPorId(final Long id) throws ProductException;
+	public CategoryData buscaPorId(final Long id) throws ProductException;
 
-	public CategoryModel atualizarCategory(CategoryData categoryData) throws CategoryException;
+	public CategoryData atualizarCategory(CategoryData categoryData) throws CategoryException;
 	
 	public CategoryModel saveCategory(CategoryModel categoryModel) throws CategoryException;
 

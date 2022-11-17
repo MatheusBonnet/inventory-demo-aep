@@ -1,25 +1,18 @@
 package br.com.aep.inventorydemo.controllers;
 
 import br.com.aep.inventorydemo.data.ProductData;
-import br.com.aep.inventorydemo.data.ProductVO;
-import br.com.aep.inventorydemo.model.EmployeeModel;
 import br.com.aep.inventorydemo.model.ProductModel;
 import br.com.aep.inventorydemo.model.Response;
 import br.com.aep.inventorydemo.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import br.com.aep.inventorydemo.constants.InventoryDemoConstants;
-import br.com.aep.inventorydemo.exception.ProductException;
 import br.com.aep.inventorydemo.service.IProductService;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/items")
@@ -49,8 +42,8 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Response<ProductVO>> findById(@PathVariable("id") Long id) {
-        Response<ProductVO> response = new Response<>();
+    public ResponseEntity<Response<ProductData>> findById(@PathVariable("id") Long id) {
+        Response<ProductData> response = new Response<>();
         response.setData(this.productService.buscaPorId(id));
         response.setStatusCode(HttpStatus.FOUND.value());
         response.setTimeStamp(new Date().getTime());
@@ -58,8 +51,8 @@ public class ProductController {
     }
 
     @GetMapping("/findStock")
-    public ResponseEntity<Response<List<ProductModel>>> findStock() {
-        Response<List<ProductModel>> response = new Response<>();
+    public ResponseEntity<Response<List<ProductData>>> findStock() {
+        Response<List<ProductData>> response = new Response<>();
         response.setData(this.productService.findStock());
         response.setStatusCode(HttpStatus.OK.value());
         response.setTimeStamp(new Date().getTime());
@@ -67,8 +60,8 @@ public class ProductController {
     }
 
     @GetMapping()
-    public ResponseEntity<Response<List<ProductVO>>> findAll() {
-        Response<List<ProductVO>> response = new Response<>();
+    public ResponseEntity<Response<List<ProductData>>> findAll() {
+        Response<List<ProductData>> response = new Response<>();
         response.setData(this.productService.findAll());
         response.setStatusCode(HttpStatus.OK.value());
         response.setTimeStamp(new Date().getTime());
@@ -76,8 +69,8 @@ public class ProductController {
     }
 
     @PutMapping()
-    public ResponseEntity<Response<ProductModel>> atualizarProduct(@RequestBody ProductData productData){
-        Response<ProductModel> response = new Response<>();
+    public ResponseEntity<Response<ProductData>> atualizarProduct(@RequestBody ProductData productData){
+        Response<ProductData> response = new Response<>();
         response.setData(this.productService.atualizarProduto(productData));
         response.setStatusCode(HttpStatus.OK.value());
         return ResponseEntity.ok(response);

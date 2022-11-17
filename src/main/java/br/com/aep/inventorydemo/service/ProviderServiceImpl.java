@@ -30,7 +30,7 @@ public class ProviderServiceImpl implements IProviderService {
     @Override
     public void excluiProvider(Long id) {
         try {
-            ProviderModel providerModel = buscaPorId(id);
+            ProviderModel providerModel = iProviderRepository.findById(id).get();
             if (Objects.nonNull(providerModel)) {
                 iProviderRepository.delete(providerModel);
             }
@@ -41,10 +41,11 @@ public class ProviderServiceImpl implements IProviderService {
     }
 
     @Override
-    public ProviderModel buscaPorId(Long id) {
+    public ProviderData buscaPorId(Long id) {
         try {
-            Optional<ProviderModel> providerModel = iProviderRepository.findById(id);
-            return Objects.nonNull(providerModel) ? providerModel.get() : null;
+            ProviderModel providerModel = iProviderRepository.findById(id).get();
+
+            return Objects.nonNull(providerModel) ? providerFacade.populaProviderData(new ProviderData(), providerModel) : null;
 
         } catch (ProviderException e) {
             throw new ProviderException(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND, e.getMessage());
@@ -52,11 +53,12 @@ public class ProviderServiceImpl implements IProviderService {
     }
 
     @Override
-    public ProviderModel atualizarProvider(ProviderData providerData) throws ProviderException {
+    public ProviderData atualizarProvider(ProviderData providerData) throws ProviderException {
         try {
-            ProviderModel providerModel = buscaPorId(providerData.getId());
-            providerFacade.atualizaProduto(providerModel, providerData);
-            return iProviderRepository.save(providerModel);
+            ProviderModel providerModel = iProviderRepository.findById(providerData.getId()).get();
+            providerFacade.atualizaProvider(providerModel, providerData);
+            iProviderRepository.save(providerModel);
+            return providerFacade.populaProviderData(providerData, providerModel);
         } catch (ProviderException e) {
             throw new ProviderException(InventoryDemoConstants.MESSAGE_ERROR_REGISTER, e.getMessage());
         }
@@ -78,10 +80,10 @@ public class ProviderServiceImpl implements IProviderService {
     }
 
     @Override
-    public ProviderModel buscaPorNome(String nome) {
+    public ProviderData buscaPorNome(String nome) {
         try {
             ProviderModel providerModel = iProviderRepository.findByName(nome);
-            return Objects.nonNull(providerModel) ? providerModel : null;
+            return Objects.nonNull(providerModel) ? providerFacade.populaProviderData(new ProviderData(), providerModel) : null;
 
         } catch (ProviderException e) {
             throw new ProviderException(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND, e.getMessage());

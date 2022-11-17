@@ -2,7 +2,6 @@ package br.com.aep.inventorydemo.service;
 
 import br.com.aep.inventorydemo.constants.InventoryDemoConstants;
 import br.com.aep.inventorydemo.data.ProductData;
-import br.com.aep.inventorydemo.data.ProductVO;
 import br.com.aep.inventorydemo.exception.CategoryException;
 import br.com.aep.inventorydemo.exception.ProductException;
 import br.com.aep.inventorydemo.facade.ProductFacade;
@@ -68,23 +67,23 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public ProductVO buscaPorId(Long id) throws ProductException {
+    public ProductData buscaPorId(Long id) throws ProductException {
         try {
             Optional<ProductModel> productModel = productRepository.findById(id);
-            return productFacade.populaData(new ProductVO(), productModel.get());
+            return productFacade.populaData(new ProductData(), productModel.get());
         }catch (ProductException e){
             throw  new ProductException(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND, e.getMessage());
         }
     }
 
     @Override
-    public  List<ProductVO> findAll() throws ProductException {
+    public  List<ProductData> findAll() throws ProductException {
         try {
             List<ProductModel> productModelList = productRepository.findAll();
-            List<ProductVO> productVOS = new ArrayList<>();
+            List<ProductData> productVOS = new ArrayList<>();
             for(ProductModel productModel : productModelList){
                 if(productModel.getAtivo() == Boolean.TRUE)
-                productVOS.add(productFacade.populaData(new ProductVO(), productModel));
+                productVOS.add(productFacade.populaData(new ProductData(), productModel));
             }
             return productVOS;
         }catch (ProductException e){
@@ -93,7 +92,7 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public ProductModel atualizarProduto(ProductData productData) throws ProductException {
+    public ProductData atualizarProduto(ProductData productData) throws ProductException {
         try{
 
             ProductModel productModel = productRepository.findById(productData.getId()).get();
@@ -111,7 +110,7 @@ public class ProductServiceImpl implements IProductService{
                 productRepository.save(productFacade.atualizaProduto(productModel, productData));
             }
 
-            return productModel;
+            return productFacade.populaData(new ProductData(), productModel);
 
         }catch (ProductException e){
             throw  new ProductException(InventoryDemoConstants.MESSAGE_ERROR_REGISTER, e.getMessage());
@@ -139,13 +138,13 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public List<ProductModel> findStock() {
+    public List<ProductData> findStock() {
         Integer stock = Integer.parseInt(environment.getProperty("productWithoutStock"));
-        List<ProductModel> withoutStock = new ArrayList<>();
+        List<ProductData> withoutStock = new ArrayList<>();
         List<ProductModel> productModelList = productRepository.findAll();
         for(ProductModel productModel : productModelList){
             if (Objects.nonNull(productModel) && productModel.getQuantidade() <= stock)
-                withoutStock.add(productModel);
+                withoutStock.add(productFacade.populaData(new ProductData(), productModel));
         }
 
         return withoutStock;
