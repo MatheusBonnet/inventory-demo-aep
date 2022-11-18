@@ -29,13 +29,15 @@ public class ProviderModel {
 	private String endereco;
 	
 	private String email;
+
+	private Boolean ativo;
 	
 	public ProviderModel() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public ProviderModel(Long id, String nome, String empresa, String contato, String cnpj, String endereco,
-			String email) {
+			String email, Boolean ativo) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -44,6 +46,7 @@ public class ProviderModel {
 		this.cnpj = cnpj;
 		this.endereco = endereco;
 		this.email = email;
+		this.ativo = ativo;
 	}
 
 	public Long getId() {
@@ -102,4 +105,11 @@ public class ProviderModel {
 		this.email = email;
 	}
 
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
 }

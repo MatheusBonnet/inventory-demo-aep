@@ -6,6 +6,7 @@ import br.com.aep.inventorydemo.model.CategoryModel;
 import br.com.aep.inventorydemo.model.ProductModel;
 import br.com.aep.inventorydemo.model.ProviderModel;
 import br.com.aep.inventorydemo.model.Response;
+import br.com.aep.inventorydemo.repository.IProviderRepository;
 import br.com.aep.inventorydemo.service.IProductService;
 import br.com.aep.inventorydemo.service.IProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,11 @@ public class ProviderController {
         response.setData(this.iProviderService.atualizarProvider(providerData));
         response.setStatusCode(HttpStatus.OK.value());
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<ProviderData>> findAll() {
+        return ResponseEntity.ok(this.iProviderService.findAll());
     }
 
 }

@@ -7,11 +7,13 @@ import br.com.aep.inventorydemo.exception.CategoryException;
 import br.com.aep.inventorydemo.exception.ProductException;
 import br.com.aep.inventorydemo.exception.ProviderException;
 import br.com.aep.inventorydemo.facade.ProviderFacade;
+import br.com.aep.inventorydemo.model.ProductModel;
 import br.com.aep.inventorydemo.model.ProviderModel;
 import br.com.aep.inventorydemo.repository.ICategoryRepository;
 import br.com.aep.inventorydemo.repository.IProviderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +33,9 @@ public class ProviderServiceImpl implements IProviderService {
     public void excluiProvider(Long id) {
         try {
             ProviderModel providerModel = iProviderRepository.findById(id).get();
-            if (Objects.nonNull(providerModel)) {
-                iProviderRepository.delete(providerModel);
+            if (Objects.nonNull(providerModel) && providerModel.getAtivo() == Boolean.TRUE) {
+                providerModel.setAtivo(Boolean.FALSE);
+                iProviderRepository.save(providerModel);
             }
 
         } catch (ProviderException e) {
@@ -67,12 +70,13 @@ public class ProviderServiceImpl implements IProviderService {
     }
 
     @Override
-    public ProviderModel saveProvider(ProviderModel ProviderModel) throws ProviderException {
+    public ProviderModel saveProvider(ProviderModel providerModel) throws ProviderException {
         try {
             {
-                this.iProviderRepository.save(ProviderModel);
+                providerModel.setAtivo(Boolean.TRUE);
+                this.iProviderRepository.save(providerModel);
             }
-            return ProviderModel;
+            return providerModel;
 
         } catch (ProviderException e) {
             throw new ProviderException(InventoryDemoConstants.MESSAGE_ERROR_REGISTER, e.getMessage());
@@ -101,5 +105,23 @@ public class ProviderServiceImpl implements IProviderService {
         }
     }
 
+    @Override
+    public List<ProviderData> findAll() {
+        try {
+            List<ProviderModel> providerModels = iProviderRepository.findAll();
+            List<ProviderData> providerDataList = new ArrayList<>();
+            for(ProviderModel providerModel: providerModels){
+                if(providerModel.getAtivo() == Boolean.TRUE) {
+                    providerDataList.add(providerFacade.populaProviderData(new ProviderData(), providerModel));
+                }
+            }
 
+            return CollectionUtils.isEmpty(providerDataList) ?  new ArrayList<>() : providerDataList;
+
+        } catch (ProviderException e) {
+            throw new ProviderException(InventoryDemoConstants.MESSAGE_ERROR_NOT_FOUND, e.getMessage());
+        }
+
+
+    }
 }

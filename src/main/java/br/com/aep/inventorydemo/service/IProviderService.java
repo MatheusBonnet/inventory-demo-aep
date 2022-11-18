@@ -24,4 +24,6 @@ public interface IProviderService {
     public ProviderData buscaPorNome(String nome);
 
     public List<String> allByname();
+
+    public List<ProviderData> findAll();
 }

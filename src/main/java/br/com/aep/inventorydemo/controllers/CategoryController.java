@@ -41,8 +41,8 @@ public class CategoryController {
     }
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Response<CategoryModel>> findById(@PathVariable final Long id){
-			Response<CategoryModel> response = new Response<>();
+	public ResponseEntity<Response<CategoryData>> findById(@PathVariable final Long id){
+			Response<CategoryData> response = new Response<>();
 	        response.setData(this.categoryService.buscaPorId(id));
 	        response.setStatusCode(HttpStatus.OK.value());
 	        response.setTimeStamp(new Date().getTime());
@@ -68,8 +68,8 @@ public class CategoryController {
 	}
 
 	@PutMapping()
-	public ResponseEntity<Response<CategoryModel>> atualizarCategory(@RequestBody CategoryData categoryData){
-		Response<CategoryModel> response = new Response<>();
+	public ResponseEntity<Response<CategoryData>> atualizarCategory(@RequestBody CategoryData categoryData){
+		Response<CategoryData> response = new Response<>();
 		response.setData(this.categoryService.atualizarCategory(categoryData));
 		response.setStatusCode(HttpStatus.OK.value());
 		return ResponseEntity.ok(response);
